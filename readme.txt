@@ -4,12 +4,12 @@ Donate link: http://www.stormconsultancy.co.uk/
 Tags: twitter, oauth, feed, tweets
 Requires at least: 3.4
 Tested up to: 3.5
-Stable tag: 2.0
-Version: 2.0
+Stable tag: 2.0.1
+Version: 2.0.1
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
-Twitter API 1.1 compliant plugin that provides a single function for getting an array of a twitter timeline for use by theme developers.
+Twitter API 1.1 compliant plugin that provides a function to get an array of tweets from the auth'd users Twitter feed for use in themes.
 
 == Description ==
 
@@ -66,7 +66,7 @@ Uses Abraham Williams's Twitter OAuth class.
 
 == About ==
 
-Version: 2.0
+Version: 2.0.1
 
 Written by Liam Gladdy of Storm Consultancy - <http://www.stormconsultancy.co.uk>
 
@@ -99,6 +99,9 @@ OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
 WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 == Changelog ==
+
+= 2.0.1 =
+* Fix an issue with upgrading from 1.0.6
 
 = 2.0.0 =
 * Support multiple screennames
