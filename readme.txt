@@ -3,9 +3,9 @@ Contributors: stormuk, lgladdy
 Donate link: http://www.stormconsultancy.co.uk/
 Tags: twitter, oauth, feed, tweets
 Requires at least: 3.4
-Tested up to: 3.5
-Stable tag: 2.0.1
-Version: 2.0.1
+Tested up to: 3.8
+Stable tag: 2.1.4
+Version: 2.1.4
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -66,7 +66,7 @@ Uses Abraham Williams's Twitter OAuth class.
 
 == About ==
 
-Version: 2.0.1
+Version: 2.1.3
 
 Written by Liam Gladdy of Storm Consultancy - <http://www.stormconsultancy.co.uk>
 
@@ -100,8 +100,30 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 == Changelog ==
 
+= 2.1.3 =
+* Fixes 2.1 for people using the very old getTweets($int) syntax. You should still change to the new version, but this will at least not be broken!
+
+= 2.1.2 =
+* Just a version bump - I'm the worst at remembering to update all the right places.
+
+= 2.1.1 =
+* Add support for a proxy server, as defined in wp-settings.php (Thanks, josmeer)
+
+= 2.1 =
+* Change default and prefered method of calling to username, then count (For backwards compatibility, both will work)
+* Only include OAuth if an OAuthRequest class isn't already defined. This should stop some errors some folks have with other plugins.
+* Bug Fixes
+
+= 2.0.3 =
+* Further defensive code against twitter abnormalities 
+
+= 2.0.2 =
+* Be a touch more graceful when Twitter is down or returning invalid data.
+* Please make sure twitter is online before you upgrade - The update invalidates your cache and will display an error if twitter is offline.
+
 = 2.0.1 =
-* Fix an issue with upgrading from 1.0.6
+* Please make sure twitter is online before you upgrade - The update invalidates your cache and will display an error if twitter is offline.
+* Fix an issue with upgrading from 1.0.6, which turned out to not be an issue at all, and is actually because twitter went down and scared me very much.
 
 = 2.0.0 =
 * Support multiple screennames
