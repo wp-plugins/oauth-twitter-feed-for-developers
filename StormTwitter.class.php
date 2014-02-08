@@ -1,12 +1,17 @@
 <?php
 /*
-* Version 2.0.1
+* Version 2.2.0
 * The base class for the storm twitter feed for developers.
 * This class provides all the things needed for the wordpress plugin, but in theory means you don't need to use it with wordpress.
 * What could go wrong?
 */
 
-require_once('oauth/twitteroauth.php');
+
+if (!class_exists('TwitterOAuth')) {
+  require_once('oauth/twitteroauth.php');
+} else {
+  define('TFD_USING_EXISTING_LIBRARY_TWITTEROAUTH',true);
+}
 
 class StormTwitter {
 
@@ -30,8 +35,12 @@ class StormTwitter {
     return print_r($this->defaults, true);
   }
   
-  //I'd prefer to put username before count, but for backwards compatibility it's not really viable. :(
-  function getTweets($count = 20,$screenname = false,$options = false) {  
+  function getTweets($screenname = false,$count = 20,$options = false) {
+    // BC: $count used to be the first argument
+    if (is_int($screenname)) {
+      list($screenname, $count) = array($count, $screenname);
+    }
+    
     if ($count > 20) $count = 20;
     if ($count < 1) $count = 1;
     
@@ -43,7 +52,7 @@ class StormTwitter {
       $options = array_merge($default_options, $options);
     }
     
-    if ($screenname === false) $screenname = $this->defaults['screenname'];
+    if ($screenname === false || $screenname === 20) $screenname = $this->defaults['screenname'];
   
     $result = $this->checkValidCache($screenname,$options);
     
@@ -54,10 +63,20 @@ class StormTwitter {
     //If we're here, we need to load.
     $result = $this->oauthGetTweets($screenname,$options);
     
-    if (isset($result['errors'])) {
-      return array('error'=>'Twitter said: '.$result['errors'][0]['message']);
+    if (is_array($result) && isset($result['errors'])) {
+      if (is_array($result) && isset($result['errors'][0]) && isset($result['errors'][0]['message'])) {
+        $last_error = $result['errors'][0]['message'];
+      } else {
+        $last_error = $result['errors'];
+      }
+      return array('error'=>'Twitter said: '.json_encode($last_error));
     } else {
-      return $this->cropTweets($result,$count);
+      if (is_array($result)) {
+        return $this->cropTweets($result,$count);
+      } else {
+        $last_error = 'Something went wrong with the twitter request: '.json_encode($result);
+        return array('error'=>$last_error);
+      }
     }
     
   }
@@ -144,8 +163,13 @@ class StormTwitter {
       $file = $this->getCacheLocation();
       file_put_contents($file,json_encode($cache));
     } else {
-      $last_error = '['.date('r').'] Twitter error: '.$result['errors'][0]['message'];
-      $this->st_last_error = $last_error;
+      if (is_array($results) && isset($result['errors'][0]) && isset($result['errors'][0]['message'])) {
+        $last_error = '['.date('r').'] Twitter error: '.$result['errors'][0]['message'];
+        $this->st_last_error = $last_error;
+      } else {
+        $last_error = '['.date('r').'] Twitter returned an invalid response. It is probably down.';
+        $this->st_last_error = $last_error;
+      }
     }
     
     return $result;

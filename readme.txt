@@ -3,9 +3,9 @@ Contributors: stormuk, lgladdy
 Donate link: http://www.stormconsultancy.co.uk/
 Tags: twitter, oauth, feed, tweets
 Requires at least: 3.4
-Tested up to: 3.5
-Stable tag: 2.0.1
-Version: 2.0.1
+Tested up to: 3.8
+Stable tag: 2.2.0
+Version: 2.2.0
 License: MIT
 License URI: http://opensource.org/licenses/MIT
 
@@ -15,9 +15,9 @@ Twitter API 1.1 compliant plugin that provides a function to get an array of twe
 
 A Twitter API 1.1 compliant wordpress plugin that provides an array of a users timeline from Twitter for use by theme developers.
 
-The new Twitter API requires you be oAuth'd before you can request a list of tweets, this means that all of the existing Twitter plugins that simply make an AJAX request for to the JSON API endpoint will break as of March 2013. 
+The new Twitter API requires you be oAuth'd before you can request a list of tweets, this means that all of the existing Twitter plugins that simply make an AJAX request for to the JSON API endpoint broke in March 2013. 
 
-This is a major problem for the vast majority of websites that are currently using twitter, so we built a PHP class that implements all the new requirements for authentication and gives you an array of tweets out of the other end, for you to use in your PHP applications, or WordPress theme.  You can find the stand-alone [StormTwitter](https://github.com/stormuk/storm-twitter) class on GitHub
+This wass a major problem for the vast majority of websites that are currently using twitter, so we built a PHP class that implements all the new requirements for authentication and gives you an array of tweets out of the other end, for you to use in your PHP applications, or WordPress theme.  You can find the stand-alone [StormTwitter](https://github.com/stormuk/storm-twitter) class on GitHub
 
 This plugin wraps our Twitter class and provides a settings screen for easy integration into WordPress.  However, it's definitely for developers - you only get a PHP array out of it that contains Twitter tweet objects. You'll still need to style the output and make it comply with the new display requirements.
 
@@ -66,7 +66,7 @@ Uses Abraham Williams's Twitter OAuth class.
 
 == About ==
 
-Version: 2.0.1
+Version: 2.2.0
 
 Written by Liam Gladdy of Storm Consultancy - <http://www.stormconsultancy.co.uk>
 
@@ -76,7 +76,7 @@ If you are looking for a [Bath WordPress Developer](http://www.stormconsultancy.
 
 == License ==
 
-Copyright (c) 2013 Storm Consultancy (EU) Ltd, 
+Copyright (c) 2014 Storm Consultancy (EU) Ltd and Liam Gladdy, 
 <http://www.stormconsultancy.co.uk/>
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -100,8 +100,33 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 == Changelog ==
 
+= 2.2.0 =
+* Check if any of our libraries are loaded by other plugins. If so, don't load them and produce a warning in our settings. This will prevent fatal errors when any other plugin uses OAuth or TwitterOAuth.
+
+= 2.1.3 =
+* Fixes 2.1 for people using the very old getTweets($int) syntax. You should still change to the new version, but this will at least not be broken!
+
+= 2.1.2 =
+* Just a version bump - I'm the worst at remembering to update all the right places.
+
+= 2.1.1 =
+* Add support for a proxy server, as defined in wp-settings.php (Thanks, josmeer)
+
+= 2.1 =
+* Change default and prefered method of calling to username, then count (For backwards compatibility, both will work)
+* Only include OAuth if an OAuthRequest class isn't already defined. This should stop some errors some folks have with other plugins.
+* Bug Fixes
+
+= 2.0.3 =
+* Further defensive code against twitter abnormalities 
+
+= 2.0.2 =
+* Be a touch more graceful when Twitter is down or returning invalid data.
+* Please make sure twitter is online before you upgrade - The update invalidates your cache and will display an error if twitter is offline.
+
 = 2.0.1 =
-* Fix an issue with upgrading from 1.0.6
+* Please make sure twitter is online before you upgrade - The update invalidates your cache and will display an error if twitter is offline.
+* Fix an issue with upgrading from 1.0.6, which turned out to not be an issue at all, and is actually because twitter went down and scared me very much.
 
 = 2.0.0 =
 * Support multiple screennames
