@@ -3,7 +3,7 @@ Contributors: stormuk, lgladdy
 Donate link: http://www.stormconsultancy.co.uk/
 Tags: twitter, oauth, feed, tweets
 Requires at least: 3.4
-Tested up to: 3.8
+Tested up to: 4.2
 Stable tag: 2.2.1
 Version: 2.2.1
 License: MIT
